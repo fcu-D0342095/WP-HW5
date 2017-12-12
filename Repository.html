@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+       #map {
+        height: 600px;
+        width: 100%;
+       }
+    </style>
+</head>
+<body>
+  <h3>My Google Maps Demo</h3>
+  <div id="map"></div>
+  <script>
+  function initMap() 
+  {
+  	var geocoder = new google.maps.Geocoder;
+    var infowindow = new google.maps.InfoWindow;
+
+    var fcu = {lat: 24.1797, lng: 120.6467};
+    var map = new 
+    google.maps.Map(document.getElementById('map'),
+    {
+      zoom: 14,
+      center: fcu
+    });
+
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var icons = 
+    {
+      post_office: 
+      {icon: iconBase + 'post_office.png'},
+      gas_station: 
+      {icon: iconBase + 'gas_stations.png'}
+    };
+
+    var features = [
+    {
+      position: new google.maps.LatLng(24.176696, 120.637655),
+      type: 'post_office',
+      contentString: '123' 
+    },
+    {
+      position: new google.maps.LatLng(24.175288, 120.649133),
+      type: 'post_office'
+    },
+    {
+      position: new google.maps.LatLng(24.164653, 120.654201),
+      type: 'post_office'
+    },
+    {
+      position: new google.maps.LatLng(24.156548, 120.652861),
+      type: 'post_office'
+    },
+    {
+      position: new google.maps.LatLng(24.166980, 120.671306),
+      type: 'post_office'
+    },
+    {
+      position: new google.maps.LatLng(24.150766, 120.660770),
+      type: 'post_office'
+    },
+    {
+      position: new google.maps.LatLng(24.147171, 120.673935),
+      type: 'post_office'
+    },
+    {
+      position: new google.maps.LatLng(24.183420, 120.618619),
+      type: 'post_office'
+    },
+    {
+      position: new google.maps.LatLng(24.171341, 120.643928),
+      type: 'gas_station'
+    },
+    {
+      position: new google.maps.LatLng(24.180124, 120.632492),
+      type: 'gas_station'
+    },
+    {
+      position: new google.maps.LatLng(24.171503, 120.659826),
+      type: 'gas_station'
+    },
+    {
+      position: new google.maps.LatLng(24.162496, 120.628169),
+      type: 'gas_station'
+    },
+    {
+      position: new google.maps.LatLng(24.156318, 120.658916),
+      type: 'gas_station'
+    },
+    {
+      position: new google.maps.LatLng(24.151155, 120.652857),
+      type: 'gas_station'
+    },
+    {
+      position: new google.maps.LatLng(24.162682, 120.666839),
+      type: 'gas_station'
+    },
+    {
+      position: new google.maps.LatLng(24.183142, 120.614569),
+      type: 'gas_station'
+    },
+    {
+      position: new google.maps.LatLng(24.192730, 120.623173),
+      type: 'gas_station'
+    }
+    ];
+
+    features.forEach(function(feature) 
+    {
+    	var marker = new google.maps.Marker
+    	({
+        	position: feature.position,
+        	icon: icons[feature.type].icon,
+        	map: map
+      	});
+      
+	    marker.addListener('mouseover', function() {
+	        geocoder.geocode({'location': marker.getPosition()}, function(results, status) {
+	        	if (status === 'OK') {
+	            	if (results[0]) {
+	            		infowindow.setContent(results[0].formatted_address);
+	            		infowindow.open(map, marker);
+	            	} 
+	         		else {
+	              		window.alert('No results found');
+	            	}
+	        	} 
+	        	else {
+	        		window.alert('Geocoder failed due to: ' + status);
+	        	}
+	        });
+	    });
+    });
+  }
+
+
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVT_6sfN4bLYs--lnVXdtLvLUibORxKsc&callback=initMap"></script>
+</body>
+
+</html>
